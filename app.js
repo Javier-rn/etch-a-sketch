@@ -1,8 +1,13 @@
 const container = document.querySelector('.container');
 const clearBtn = document.getElementById('clear-btn');
+const rainbowBtn = document.getElementById('rainbow-btn');
 const sizeBtn = document.getElementById('size-btn');
 
-function makeGrid(size) {
+let currentMode = 'normal';
+
+makeGrid(16, 'normal');
+
+function makeGrid(size, mode) {
     container.innerHTML = '';
 
     container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -12,17 +17,19 @@ function makeGrid(size) {
         const newBox = document.createElement('div');
         newBox.classList.toggle('box');
         newBox.addEventListener('mouseover', function () {
-            newBox.style.backgroundColor = randomColorGenerator();
+            if (mode === 'normal') {
+                newBox.style.backgroundColor = 'black';
+            } else if (mode === 'rainbow') {
+                newBox.style.backgroundColor = randomColorGenerator();
+            }
         });
 
         container.appendChild(newBox);
     }
 }
 
-makeGrid(16);
-
 clearBtn.addEventListener('click', function () {
-    makeGrid(16);
+    makeGrid(16, currentMode);
 });
 
 sizeBtn.addEventListener('click', function () {
@@ -31,6 +38,16 @@ sizeBtn.addEventListener('click', function () {
         makeGrid(size);
     } else {
         alert('Size must be between 4 and 32.');
+    }
+});
+
+rainbowBtn.addEventListener('click', function () {
+    if (currentMode === 'normal') {
+        currentMode = 'rainbow';
+        makeGrid(16, currentMode);
+    } else if (currentMode === 'rainbow') {
+        currentMode = 'normal';
+        makeGrid(16, currentMode);
     }
 });
 
