@@ -19,6 +19,7 @@ function makeGrid(size, mode) {
         newBox.addEventListener('mouseover', function () {
             if (mode === 'normal') {
                 newBox.style.backgroundColor = 'black';
+                newBox.style.border = 'none';
             } else if (mode === 'rainbow') {
                 if (newBox.style.backgroundColor === '') {
                     newBox.style.backgroundColor = randomColorGenerator();
@@ -43,7 +44,7 @@ clearBtn.addEventListener('click', function () {
 sizeBtn.addEventListener('click', function () {
     const size = prompt('Please select a size (4 - 32): ');
     if (size <= 32 && size >= 4) {
-        makeGrid(size);
+        makeGrid(size, currentMode);
     } else {
         alert('Size must be between 4 and 32.');
     }
@@ -53,9 +54,11 @@ rainbowBtn.addEventListener('click', function () {
     if (currentMode === 'normal') {
         currentMode = 'rainbow';
         makeGrid(16, currentMode);
+        rainbowBtn.style.backgroundColor = 'rgb(27, 43, 65)';
     } else if (currentMode === 'rainbow') {
         currentMode = 'normal';
         makeGrid(16, currentMode);
+        rainbowBtn.style.backgroundColor = 'rgb(77, 115, 165)';
     }
 });
 
