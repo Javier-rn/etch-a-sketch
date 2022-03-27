@@ -20,7 +20,15 @@ function makeGrid(size, mode) {
             if (mode === 'normal') {
                 newBox.style.backgroundColor = 'black';
             } else if (mode === 'rainbow') {
-                newBox.style.backgroundColor = randomColorGenerator();
+                if (newBox.style.backgroundColor === '') {
+                    newBox.style.backgroundColor = randomColorGenerator();
+                } else {
+                    let currentColor = newBox.style.backgroundColor;
+                    currentColorArr = currentColor.split(', ');
+                    const newOpacity = parseFloat(currentColorArr[3]) + 0.2;
+                    currentColorArr[3] = newOpacity.toString();
+                    newBox.style.backgroundColor = currentColorArr;
+                }
             }
         });
 
@@ -55,5 +63,5 @@ function randomColorGenerator() {
     const num1 = Math.floor(Math.random() * 256) + 1;
     const num2 = Math.floor(Math.random() * 256) + 1;
     const num3 = Math.floor(Math.random() * 256) + 1;
-    return `rgb(${num1}, ${num2}, ${num3})`;
+    return `rgb(${num1}, ${num2}, ${num3}, 50%)`;
 }
